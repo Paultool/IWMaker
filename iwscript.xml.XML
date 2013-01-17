@@ -1,0 +1,31 @@
+<IWScript>
+   <IWNode id="1" IWObjectSource="A1" Action="StopAndContinue" InitTime="0" EndTime="0" NextNode="2" Top="0" Left="0" Width="0" Height="0"></IWNode>
+   <IWNode id="2" IWObjectSource="V1" Action="StopAndShowOptions" InitTime="1.25" EndTime="3.4" NextNode="0" Top="0" Left="0" Width="640" Height="480">
+		 <IWNodeOption id="1" Type="Layer" IWNodeName="OP1" IWObjectDest="V2" IWObjectSource="" Top="10" Left="30" Width="100" Height="100" NextNode="3"></IWNodeOption>
+		 <IWNodeOption id="2" Type="Image" IWNodeName="OP2" IWObjectDest="V3" IWObjectSource="I2" Top="10" Left="160" Width="100" Height="100" NextNode="4"></IWNodeOption>
+   </IWNode>
+   <IWNode id="3" IWObjectSource="A2" Action="PauseAndWait" InitTime="2.45" EndTime="5.90" NextNode="5" Top="0" Left="0" Width="0" Height="0"></IWNode>
+   <IWNode id="4" IWObjectSource="I1" Action="PauseAndShow" InitTime="0" EndTime="0" NextNode="6" Top="50" Left="100" Width="300" Height="300"></IWNode>
+   <IWNode id="5" IWObjectSource="V4" Action="Stop" InitTime="0" EndTime="0"  NextNode="-1" Top="0" Left="0" Width="640" Height="480"></IWNode>
+   <IWNode id="6" IWObjectSource="A3" Action="Stop" InitTime="0" EndTime="0"  NextNode="-1" Top="0" Left="0" Width="0" Height="0"></IWNode>
+   
+</IWScript>
+
+<IWObjects>
+	<IWObject id="A1" Source="a1.mp3" Type="audio"></IWObject>
+	<IWObject id="A2" Source="a2.mp3" Type="audio"></IWObject>
+	<IWObject id="V1" Source="v1.mp4" Type="video"></IWObject>
+	<IWObject id="V2" Source="v2.mp4" Type="video"></IWObject>
+	<IWObject id="V3" Source="v3.mp4" Type="video"></IWObject>
+	<IWObject id="I1" Source="I1.jpg" Type="imagen"></IWObject>
+	<IWObject id="I2" Source="I2.jpg" Type="imagen"></IWObject>
+	<IWObject id="V4" Source="v4.mp4" Type="video"></IWObject>
+	<IWObject id="A3" Source="a3.mp3" Type="audio"></IWObject>
+</IWObjects>
+<!-- 
+  +'; left:'+L
+  +'; top:'+T
+  +'; width:'+W
+  +'; height:'+H
+  -->
+  

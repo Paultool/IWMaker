@@ -1,0 +1,76 @@
+<form>
+<input type=button value="Create layer"
+onclick="makeLayer('LYR1',400,250,100,100,'red',1,1)">
+<input type=button value="Delete layer"
+onclick="deleteLayer('LYR1')">
+</form>
+
+<script language="JavaScript">
+<!--
+function deleteLayer(id) {
+ if (document.getElementById && document.getElementById(id)) {
+  var theNode = document.getElementById(id);
+  theNode.parentNode.removeChild(theNode);
+ }
+ else if (document.all && document.all[id]) {
+  document.all[id].innerHTML='';
+  document.all[id].outerHTML='';
+ }
+ // OBSOLETE CODE FOR NETSCAPE 4 
+ else if (document.layers && document.layers[id]) {
+  document.layers[id].visibility='hide';
+  delete document.layers[id];
+ }
+}
+
+function makeLayer(id,L,T,W,H,bgColor,visible,zIndex) {
+ if (document.getElementById) {
+  if (document.getElementById(id)) {
+   alert ('Layer with this ID already exists!');
+   return;
+  }
+
+  var ST= 'position:absolute'
+  +'; left:'+L
+  +'; top:'+T
+  +'; width:'+W
+  +'; height:'+H
+  +'; clip:rect(0,'+W+','+H+',0)'
+  +'; visibility:'+(null==visible || 1==visible ? 'visible':'hidden')
+  +(null==zIndex  ? '' : '; z-index:'+zIndex)
+  +(null==bgColor ? '' : '; background-color:'+bgColor)
+
+  var LR= '<DIV id='+id+' style="'+ST+'"></DIV>'
+
+  if (document.body) {
+   if (document.body.insertAdjacentHTML) document.body.insertAdjacentHTML("BeforeEnd",LR);
+   else
+   if (document.createElement && document.body.appendChild) {
+    var newNode = document.createElement('div');
+    newNode.setAttribute('id',id);
+    newNode.setAttribute('style',ST);
+    document.body.appendChild(newNode);
+   }
+  }
+ }
+ // OBSOLETE CODE - NETSCAPE 4
+ else if (document.layers) {
+  if (document.layers[id]) {
+   alert ('Layer with this ID already exists!')
+   return
+  }
+  var LR=document.layers[id]=new Layer(W)
+  LR.name= id
+  LR.left= L
+  LR.top = T
+  LR.clip.height=H
+  LR.visibility=(null==visible || 1==visible ? 'show' : 'hide')
+  if(null!=zIndex)  LR.zIndex=zIndex
+  if(null!=bgColor) LR.bgColor=bgColor
+ }
+}
+
+
+//-->
+</script>
+

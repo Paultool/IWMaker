@@ -1,0 +1,21 @@
+<students>
+	<student name="bob" last="smith"/><student name="john" last="doe"/>
+</students>
+<IWNodes>
+   <IWNode id="1" IWObjectSource="V1" Action="StopAndContinue" InitTime="14" EndTime="18" NextNode="2" Top="0" Left="0" Width="0" Height="0"></IWNode>
+   <IWNode id="2" IWObjectSource="V2" Action="StopAndShowOptions" InitTime="1.25" EndTime="3.4" NextNode="0" Top="0" Left="0" Width="640" Height="480"></IWNode>
+   <IWNode id="3" IWObjectSource="V3" Action="StopAndShowOptions" InitTime="1.25" EndTime="3.4" NextNode="0" Top="0" Left="0" Width="640" Height="480"></IWNode>
+   <IWNode id="4" IWObjectSource="V1" Action="StopAndShowOptions" InitTime="1.25" EndTime="3.4" NextNode="0" Top="0" Left="0" Width="640" Height="480"></IWNode>
+   
+   
+</IWNodes>
+
+<IWObjects>
+
+	<IWObject id="V1" Source="http://video-js.zencoder.com/oceans-clip.mp4" Type="video"></IWObject>
+		<Action></Action>
+	<IWObject id="V2" Source="http://video-js.zencoder.com/tina.mp4" Type="video"></IWObject>
+	<IWObject id="V3" Source="http://video-js.zencoder.com/big_buck_bunny.mp4" Type="video"></IWObject>
+	<IWObject id="V4" Source="http://video-js.zencoder.com/hubble-high.mp4" Type="video"></IWObject>
+
+</IWObjects>

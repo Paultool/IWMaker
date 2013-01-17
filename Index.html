@@ -1,0 +1,179 @@
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>HTML5 Audio Playback Syncing</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script src="Pirate.js"></script>
+</head>
+<form>
+<input type=button value="Load Objects" onclick="LoadObjets('A1')">
+<input type=button value="Load Definition" onclick="LoadDefinition(1)">
+<input type=button value="Create layer" onclick="makeLayer('LYR1',400,250,100,100,'red',1,1)">
+<input type=button value="Delete layer" onclick="deleteLayer('LYR1')">
+</form>
+<body>
+<div id="info"></div>
+<div id="VideoPlayer"></div>
+<div id="VideoContainer"></div>
+<div onclick="alert('outer');" style="width:300px;height:300px;background-color:green;padding:5px;">outer div
+    
+</div>
+
+<style type="text/css">
+  .player:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+  }
+  .player:-moz-full-screen {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<button onclick="goFullscreen('VideoContainer');">Click Me To Go Fullscreen! (All the way)</button>
+
+<div id="loadingStatus">
+0%
+<script language="JavaScript">
+<!--
+
+var NowIWNODE_Id ;
+var syncingFeeling;
+
+function goFullscreen(id) {
+    // Get the element that we want to take into fullscreen mode
+    var element = document.getElementById(id);
+    
+    // These function will not exist in the browsers that don't support fullscreen mode yet, 
+    // so we'll have to check to see if they're available before calling them.
+    
+    if (element.mozRequestFullScreen) {
+      // This is how to go into fullscren mode in Firefox
+      // Note the "moz" prefix, which is short for Mozilla.
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+      // This is how to go into fullscreen mode in Chrome and Safari
+      // Both of those browsers are based on the Webkit project, hence the same prefix.
+      element.webkitRequestFullScreen();
+   }
+   // Hooray, now we're in fullscreen mode!
+}
+  
+function syncTime(CurrentLayer, EndTime){
+	
+    $('#info').html( "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vocal currentTime: " + CurrentLayer.currentTime );
+	
+	if(Math.floor(CurrentLayer.currentTime) >= Math.floor(EndTime) ){
+		
+		CurrentLayer.pause();
+		NowIWNODE_Id = NowIWNODE_Id+1;
+		LoadDefinition(NowIWNODE_Id);
+		clearInterval( syncingFeeling );
+				
+	
+	}
+	
+}
+
+
+function deleteLayer(id) {
+
+ if (document.getElementById && document.getElementById(id)) {
+  var theNode = document.getElementById(id);
+  theNode.parentNode.removeChild(theNode);
+ }
+ else if (document.all && document.all[id]) {
+  document.all[id].innerHTML='';
+  document.all[id].outerHTML='';
+ }
+
+}
+
+function grita(){
+	alert('outer');
+}
+
+function LoadObject(IWObject_Id){
+	 $('#info').append( "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loading Objets: ");
+	jQuery.get('http://localhost/iw/iwscript.txt', function(data) {
+	
+		$(data).find('IWObject[id="'+IWObject_Id+'"]').each(function(){
+ 
+			var id = $(this).attr('id');
+			var Source = $(this).attr('Source');
+			var Type  = $(this).attr('Type');
+			
+		
+		    var Object = new IObject(id,Source, Type,'50','0','1');
+			var VideoLayer = Object.StartPlay();
+			syncingFeeling = setInterval( function() { syncTime(VideoLayer, 2); }, 250 );
+			
+			
+		});		
+	});
+}
+
+function LoadDefinition(IWNODE_Id){
+	
+	jQuery.get('http://localhost/iw/iwscript.txt', function(data) {
+	
+		$(data).find('IWNODE[id="'+IWNODE_Id+'"]').each(function(){
+ 
+			var Action = $(this).attr('Action');
+			var IWObjectSource = $(this).attr('IWObjectSource');
+			var NextNode = $(this).attr('NextNode');
+				var CurrentLayer = LoadObject(IWObjectSource);
+			NowIWNODE_Id = IWNODE_Id;
+			
+		});		
+	});
+	
+}
+
+function makeLayer(id,L,T,W,H,bgColor,visible,zIndex) {
+ var syncingFeeling;
+
+ if (document.getElementById) {
+  if (document.getElementById(id)) {
+   alert ('Layer with this ID already exists!');
+   return;
+  }
+
+  var ST= 'position:absolute'
+  +'; left:'+L
+  +'; top:'+T
+  +'; width:'+W
+  +'; height:'+H
+  +'; clip:rect(0,'+W+','+H+',0)'
+  +'; visibility:'+(null==visible || 1==visible ? 'visible':'hidden')
+  +(null==zIndex  ? '' : '; z-index:'+zIndex)
+  +(null==bgColor ? '' : '; background-color:'+bgColor)
+
+  var LR= '<DIV id='+id+' onclick="grita();"  style="'+ST+'" "></DIV>'
+
+  if (document.body) {
+   if (document.body.insertAdjacentHTML) document.body.insertAdjacentHTML("BeforeEnd",LR);
+   else
+   if (document.createElement && document.body.appendChild) {
+    var newNode = document.createElement('div');
+    newNode.setAttribute('id',id);
+    newNode.setAttribute('style',ST);
+    document.body.appendChild(newNode);
+   }
+  }
+ }
+
+  
+}
+
+
+
+//-->
+</script>
+
+</body>
+</html>
+
